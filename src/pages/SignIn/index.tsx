@@ -8,7 +8,10 @@ import {
   TextContainer,
 } from './styles';
 
+import { FiMail, FiLock } from 'react-icons/fi';
+
 import Button from '../../components/Button';
+import Input from '../../components/Input';
 
 import signInBackgroundImage from '../../assets/reading_time.svg';
 
@@ -29,8 +32,13 @@ const SignIn: React.FC = () => {
           </p>
         </TextContainer>
         <form action="">
-          <input type="text" name="" id="" placeholder="Email" />
-          <input type="text" name="" id="" placeholder="Senha" />
+          <Input name="email" icon={FiMail} placeholder="E-mail" />
+          <Input
+            type="password"
+            icon={FiLock}
+            name="password"
+            placeholder="Senha"
+          />
           <Button>Login</Button>
         </form>
 

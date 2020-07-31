@@ -38,7 +38,10 @@ export const CardContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    width: 90%;
   }
+
   > span {
     cursor: pointer;
     font-weight: 600;
