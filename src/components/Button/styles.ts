@@ -2,8 +2,10 @@ import styled from 'styled-components';
 import { shade } from 'polished';
 
 export const Container = styled.button`
-  width: 256px;
-  height: 40px;
+  width: 100%;
+  height: 48px;
+
+  margin-top: 8px;
 
   font-size: 18px;
 
