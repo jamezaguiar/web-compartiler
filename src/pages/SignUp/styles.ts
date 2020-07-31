@@ -40,6 +40,12 @@ export const CardContainer = styled.div`
     font-weight: 600;
     text-decoration: none;
 
+    transition: color 0.2s;
+
+    &:hover {
+      color: ${shade(0.2, '#12130F')};
+    }
+
     > svg {
       margin-right: 8px;
     }

@@ -17,7 +17,8 @@ const SignUp: React.FC = () => {
             Comparti<span>ler</span>
           </h1>
           <p>
-            Ajude pessoas a adquirirem conhecimento através dos livros.<br></br>
+            Encontre um livro que você quer ler e alguém que queira o emprestar.
+            <br></br>
             <span>Saiba mais.</span>
           </p>
         </TextContainer>
