@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { Container, Background, CardContainer, TextContainer } from './styles';
 
-import { FiMail, FiLock } from 'react-icons/fi';
+import { FiMail, FiLock, FiLogIn } from 'react-icons/fi';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
@@ -32,7 +33,10 @@ const SignIn: React.FC = () => {
           <Button>Login</Button>
         </form>
 
-        <span>Cadastre-se</span>
+        <Link to="/signup">
+          <FiLogIn />
+          Cadastre-se
+        </Link>
       </CardContainer>
     </Container>
   );

@@ -34,9 +34,15 @@ export const CardContainer = styled.div`
     width: 90%;
   }
 
-  > span {
-    cursor: pointer;
+  a {
+    display: flex;
+    align-items: center;
     font-weight: 600;
+    text-decoration: none;
+
+    > svg {
+      margin-right: 8px;
+    }
   }
 `;
 
