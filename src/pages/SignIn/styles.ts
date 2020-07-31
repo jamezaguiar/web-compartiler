@@ -39,7 +39,7 @@ export const CardContainer = styled.div`
     align-items: center;
     justify-content: center;
   }
-  span {
+  > span {
     cursor: pointer;
     font-weight: 600;
   }
@@ -55,14 +55,19 @@ export const TextContainer = styled.div`
   h1 {
     font-size: 40px;
     font-family: 'Merienda One', cursive;
+
+    span {
+      font-family: 'Merienda One', cursive;
+      color: #ff3c38;
+    }
   }
   p {
     font-size: 18px;
     margin-top: 2px;
 
     span {
-      font-size: 12px;
       cursor: pointer;
+      font-size: 12px;
     }
   }
 `;

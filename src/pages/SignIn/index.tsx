@@ -18,7 +18,9 @@ const SignIn: React.FC = () => {
       </ImageContainer>
       <CardContainer>
         <TextContainer>
-          <h1>Compartiler</h1>
+          <h1>
+            Comparti<span>ler</span>
+          </h1>
           <p>
             Ajude pessoas a adquirirem conhecimento através dos livros.<br></br>
             <span>Saiba mais.</span>
