@@ -1,36 +1,28 @@
 import styled from 'styled-components';
 
-export const ImageContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const Image = styled.img`
-  height: 75vh;
-`;
+import signInBackgroundImage from '../../assets/reading_time.svg';
 
 export const Container = styled.div`
   height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: stretch;
 `;
 
 export const CardContainer = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 75vh;
+
+  width: 100%;
+  max-width: 500px;
 
   background-color: #fff;
 
   border: 4px solid #e6e6e6;
   border-radius: 16px;
 
-  margin: 0 96px 0 96px;
+  margin: 32px 32px 32px 0;
   padding: 16px;
 
   form {
@@ -73,6 +65,13 @@ export const TextContainer = styled.div`
       font-size: 12px;
     }
   }
+`;
+
+export const Background = styled.div`
+  flex: 1;
+  margin-top: 64px;
+  background: url(${signInBackgroundImage}) no-repeat center;
+  background-size: cover;
 `;
 
 const OtherColors = styled.div`
