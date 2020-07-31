@@ -34,7 +34,7 @@ const SignIn: React.FC = () => {
         </form>
 
         <Link to="/signup">
-          <FiLogIn />
+          <FiLogIn size={20} />
           Cadastre-se
         </Link>
       </CardContainer>
