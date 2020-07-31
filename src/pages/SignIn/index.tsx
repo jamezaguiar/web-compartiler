@@ -8,6 +8,8 @@ import {
   TextContainer,
 } from './styles';
 
+import Button from '../../components/Button';
+
 import signInBackgroundImage from '../../assets/reading_time.svg';
 
 const SignIn: React.FC = () => {
@@ -29,7 +31,7 @@ const SignIn: React.FC = () => {
         <form action="">
           <input type="text" name="" id="" placeholder="Email" />
           <input type="text" name="" id="" placeholder="Senha" />
-          <button type="submit">Login</button>
+          <Button>Login</Button>
         </form>
 
         <span>Cadastre-se</span>
