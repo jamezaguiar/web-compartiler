@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { shade } from 'polished';
 
 import signInBackgroundImage from '../../assets/friends_online.svg';
 
