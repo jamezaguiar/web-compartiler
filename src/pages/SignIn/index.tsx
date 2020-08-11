@@ -1,7 +1,11 @@
 import React, { useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
+
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
+
+import * as Yup from 'yup';
+import getValidationErrors from '../../utils/getValidationErrors';
 
 import { Container, Background, CardContainer, TextContainer } from './styles';
 
@@ -18,8 +22,27 @@ interface SignInFormData {
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const handleSubmit = useCallback((data: SignInFormData) => {
-    console.log(data);
+  const handleSubmit = useCallback(async (data: SignInFormData) => {
+    try {
+      formRef.current?.setErrors({});
+
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .required('E-mail obrigatório.')
+          .email('Digite um e-mail válido'),
+        password: Yup.string()
+          .required('Senha obrigatória')
+          .min(8, 'Sua senha deve ter no mínimo 8 caracteres'),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+    } catch (err) {
+      const errors = getValidationErrors(err);
+
+      formRef.current?.setErrors(errors);
+    }
   }, []);
 
   return (
