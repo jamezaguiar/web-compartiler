@@ -33,7 +33,12 @@ const SignUp: React.FC = () => {
         email: Yup.string()
           .required('E-mail obrigatório.')
           .email('Digite um e-mail válido.'),
-        whatsapp: Yup.string().min(11, 'Ex: 85912345678'),
+        whatsapp: Yup.string()
+          .min(11, 'Ex: 85912345678')
+          .max(
+            11,
+            'Seu número deve ter no máximo 11 caracteres (com o DDD sem o zero)',
+          ),
         password: Yup.string()
           .required('Senha obrigatória.')
           .min(8, 'Sua senha deve ter no mínimo 8 caracteres.'),
