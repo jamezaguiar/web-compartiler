@@ -50,8 +50,7 @@ const SignIn: React.FC = () => {
 
         await signIn({ email: data.email, password: data.password });
 
-        // history.push('/dashboard');
-        console.log('logou');
+        history.push('/inicio');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -96,7 +95,7 @@ const SignIn: React.FC = () => {
           <Button type="submit">Login</Button>
         </Form>
 
-        <Link to="/signup">
+        <Link to="/cadastrar">
           <FiLogIn size={20} />
           Cadastre-se
         </Link>
