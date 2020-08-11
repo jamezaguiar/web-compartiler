@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -7,12 +7,16 @@ import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 import getValidationErrors from '../../utils/getValidationErrors';
 
+import { useToast } from '../../hooks/toast';
+
 import { Container, Background, CardContainer, TextContainer } from './styles';
 
 import { FiUser, FiMail, FiLock, FiSmartphone, FiLogOut } from 'react-icons/fi';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+
+import api from '../../services/api';
 
 interface SignUpFormData {
   name: string;
@@ -24,35 +28,59 @@ interface SignUpFormData {
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const handleSubmit = useCallback(async (data: SignUpFormData) => {
-    try {
-      formRef.current?.setErrors({});
+  const history = useHistory();
 
-      const schema = Yup.object().shape({
-        name: Yup.string().required('Nome obrigatório.'),
-        email: Yup.string()
-          .required('E-mail obrigatório.')
-          .email('Digite um e-mail válido.'),
-        whatsapp: Yup.string()
-          .min(11, 'Ex: 85912345678')
-          .max(
-            11,
-            'Seu número deve ter no máximo 11 caracteres (com o DDD sem o zero)',
-          ),
-        password: Yup.string()
-          .required('Senha obrigatória.')
-          .min(8, 'Sua senha deve ter no mínimo 8 caracteres.'),
-      });
+  const { addToast } = useToast();
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
-    } catch (err) {
-      const errors = getValidationErrors(err);
+  const handleSubmit = useCallback(
+    async (data: SignUpFormData) => {
+      try {
+        formRef.current?.setErrors({});
 
-      formRef.current?.setErrors(errors);
-    }
-  }, []);
+        const phoneRegex = /\d{11,}/;
+
+        const schema = Yup.object().shape({
+          name: Yup.string().required('Nome obrigatório.'),
+          email: Yup.string()
+            .required('E-mail obrigatório.')
+            .email('Digite um e-mail válido.'),
+          whatsapp: Yup.string().matches(phoneRegex, 'Ex: 85912345678'),
+          password: Yup.string()
+            .required('Senha obrigatória.')
+            .min(8, 'Sua senha deve ter no mínimo 8 caracteres.'),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        await api.post('/users', data);
+
+        history.push('/');
+
+        addToast({
+          type: 'success',
+          title: 'Cadastro realizado com sucesso!',
+          description: 'Agora, você pode fazer login no Compartiler.',
+        });
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+
+          formRef.current?.setErrors(errors);
+
+          return;
+        }
+
+        addToast({
+          type: 'error',
+          title: 'Erro no cadastro',
+          description: 'Ocorreu um erro ao fazer cadastro, tente novamente.',
+        });
+      }
+    },
+    [addToast, history],
+  );
 
   return (
     <Container>
