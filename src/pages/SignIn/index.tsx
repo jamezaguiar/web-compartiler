@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { Form } from '@unform/web';
+import { FormHandles } from '@unform/core';
 
 import { Container, Background, CardContainer, TextContainer } from './styles';
 
@@ -8,7 +10,18 @@ import { FiMail, FiLock, FiLogIn } from 'react-icons/fi';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
+interface SignInFormData {
+  email: string;
+  password: string;
+}
+
 const SignIn: React.FC = () => {
+  const formRef = useRef<FormHandles>(null);
+
+  const handleSubmit = useCallback((data: SignInFormData) => {
+    console.log(data);
+  }, []);
+
   return (
     <Container>
       <Background />
@@ -22,7 +35,7 @@ const SignIn: React.FC = () => {
             <span>Saiba mais.</span>
           </p>
         </TextContainer>
-        <form action="">
+        <Form ref={formRef} onSubmit={handleSubmit}>
           <Input name="email" icon={FiMail} placeholder="E-mail" />
           <Input
             type="password"
@@ -30,8 +43,8 @@ const SignIn: React.FC = () => {
             name="password"
             placeholder="Senha"
           />
-          <Button>Login</Button>
-        </form>
+          <Button type="submit">Login</Button>
+        </Form>
 
         <Link to="/signup">
           <FiLogIn size={20} />
