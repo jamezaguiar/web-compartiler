@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useAuth } from '../../hooks/auth';
+import { FiUser } from 'react-icons/fi';
 
-import { Container, TextLogo, InfoContainer } from './styles';
+import { useAuth } from '../../hooks/auth';
+import { useToast } from '../../hooks/toast';
+
+import {
+  Container,
+  TextLogo,
+  InfoContainer,
+  PopoverContent,
+  Option,
+} from './styles';
+import Popover from 'react-tiny-popover';
 
 const Header: React.FC = () => {
-  const { user } = useAuth();
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
+  const { user, signOut } = useAuth();
+  const { addToast } = useToast();
 
   return (
     <Container>
@@ -15,7 +28,36 @@ const Header: React.FC = () => {
           <h1>Compartiler</h1>
         </Link>
       </TextLogo>
-      <InfoContainer>{user.name}</InfoContainer>
+      <InfoContainer>
+        <p>{user.name}</p>
+        <Popover
+          isOpen={isPopoverOpen}
+          position={['bottom', 'right']}
+          content={
+            <PopoverContent>
+              <Option>
+                <Link to="/historico">Histórico</Link>
+              </Option>
+              <Option
+                onClick={() => {
+                  signOut();
+                  addToast({
+                    title: 'Você saiu.',
+                    type: 'info',
+                    description: 'Leia muitos livros enquanto está fora.',
+                  });
+                }}
+              >
+                Sair
+              </Option>
+            </PopoverContent>
+          }
+        >
+          <div onClick={() => setIsPopoverOpen(!isPopoverOpen)}>
+            <FiUser color="#e6e6e6" size={20} />
+          </div>
+        </Popover>
+      </InfoContainer>
     </Container>
   );
 };
