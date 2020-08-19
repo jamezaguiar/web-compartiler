@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { FiUser } from 'react-icons/fi';
 
 import Popover from 'react-tiny-popover';
-import { IconContext } from 'react-icons';
 import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
 
