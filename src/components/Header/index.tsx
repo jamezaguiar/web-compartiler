@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { FiUser } from 'react-icons/fi';
 
+import Popover from 'react-tiny-popover';
+import { IconContext } from 'react-icons';
 import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
 
@@ -11,9 +13,9 @@ import {
   TextLogo,
   InfoContainer,
   PopoverContent,
+  PopoverButton,
   Option,
 } from './styles';
-import Popover from 'react-tiny-popover';
 
 const Header: React.FC = () => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -53,9 +55,9 @@ const Header: React.FC = () => {
             </PopoverContent>
           }
         >
-          <div onClick={() => setIsPopoverOpen(!isPopoverOpen)}>
-            <FiUser color="#e6e6e6" size={20} />
-          </div>
+          <PopoverButton onClick={() => setIsPopoverOpen(!isPopoverOpen)}>
+            <FiUser size={24} color="#e6e6e6" />
+          </PopoverButton>
         </Popover>
       </InfoContainer>
     </Container>

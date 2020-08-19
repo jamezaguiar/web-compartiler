@@ -37,6 +37,7 @@ export const InfoContainer = styled.div`
 
   p {
     color: #e6e6e6;
+    font-weight: 600;
   }
 
   svg {
@@ -48,6 +49,12 @@ export const InfoContainer = styled.div`
 export const PopoverContent = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const PopoverButton = styled.div`
+  svg {
+    stroke: #e6e6e6;
+  }
 `;
 
 export const Option = styled.button`
