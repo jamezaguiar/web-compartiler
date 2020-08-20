@@ -5,14 +5,13 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 
 import * as Yup from 'yup';
+import { FiMail, FiLock, FiLogIn } from 'react-icons/fi';
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
 
 import { Container, Background, CardContainer, TextContainer } from './styles';
-
-import { FiMail, FiLock, FiLogIn } from 'react-icons/fi';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
@@ -80,7 +79,8 @@ const SignIn: React.FC = () => {
             Comparti<span>ler</span>
           </h1>
           <p>
-            Ajude pessoas a adquirirem conhecimento através dos livros.<br></br>
+            Ajude pessoas a adquirirem conhecimento através dos livros.
+            <br />
             <span>Saiba mais.</span>
           </p>
         </TextContainer>
