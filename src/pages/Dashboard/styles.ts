@@ -15,9 +15,15 @@ export const Content = styled.div`
 export const Title = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 
-  margin: 16px 0 16px 0;
+  margin: 16px;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   svg {
     margin-right: 8px;
@@ -58,12 +64,12 @@ export const Book = styled.div`
 
     text-decoration: none;
 
-    height: 10vh;
+    height: auto;
     border: 1px solid ${shade(0.1, '#e6e6e6')};
     padding: 8px;
 
     img {
-      height: 100%;
+      height: 64px;
     }
 
     div {

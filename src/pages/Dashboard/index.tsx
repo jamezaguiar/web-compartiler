@@ -1,8 +1,14 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import socketio from 'socket.io-client';
 import { Link } from 'react-router-dom';
 
-import { FiChevronRight, FiBook, FiBookmark, FiBookOpen } from 'react-icons/fi';
+import {
+  FiChevronRight,
+  FiBook,
+  FiBookmark,
+  FiBookOpen,
+  FiPlus,
+} from 'react-icons/fi';
 import api from '../../services/api';
 
 import { useAuth } from '../../hooks/auth';
@@ -65,7 +71,7 @@ const Dashboard: React.FC = () => {
     socket.on('check_possible_loans', (data: Book[]) => {
       setPossibleLoans(data);
     });
-  }, []);
+  });
 
   useEffect(() => {
     api
@@ -73,10 +79,14 @@ const Dashboard: React.FC = () => {
       .then(response => {
         setBooks(response.data);
       })
-      .catch(error => {
-        console.log(error);
+      .catch(() => {
+        addToast({
+          title: 'Erro',
+          type: 'error',
+          description: 'Algo deu errado, tente novamente.',
+        });
       });
-  }, [user.id]);
+  }, [addToast, user.id]);
 
   useEffect(() => {
     api
@@ -84,10 +94,14 @@ const Dashboard: React.FC = () => {
       .then(response => {
         setWishes(response.data);
       })
-      .catch(error => {
-        console.log(error);
+      .catch(() => {
+        addToast({
+          title: 'Erro',
+          type: 'error',
+          description: 'Algo deu errado, tente novamente.',
+        });
       });
-  }, [user.id]);
+  }, [addToast, user.id]);
 
   useEffect(() => {
     possibleLoans.forEach(possibility => {
@@ -105,12 +119,17 @@ const Dashboard: React.FC = () => {
       <Content>
         <BooksContainer>
           <Title>
-            <FiBook size={20} />
-            <p>Seus livros</p>
+            <div>
+              <FiBook size={20} />
+              <p>Seus livros</p>
+            </div>
+            <Link to="/novoLivro">
+              <FiPlus size={20} />
+            </Link>
           </Title>
           {books.map(book => (
             <Book key={book.id}>
-              <Link to="/book">
+              <Link to="/livro">
                 <img src={book.cover_url} alt="Capa do livro" />
                 <div>
                   <strong>{book.title}</strong>
@@ -124,12 +143,17 @@ const Dashboard: React.FC = () => {
         </BooksContainer>
         <WishesContainer>
           <Title>
-            <FiBookmark size={20} />
-            <p>Sua lista de desejos</p>
+            <div>
+              <FiBookmark size={20} />
+              <p>Sua lista de desejos</p>
+            </div>
+            <Link to="/novoDesejo">
+              <FiPlus size={20} />
+            </Link>
           </Title>
           {wishes.map(wish => (
             <Book key={wish.book.isbn}>
-              <Link to="/book">
+              <Link to="/livro">
                 <img src={wish.book.cover_url} alt="Capa do livro" />
                 <div>
                   <strong>{wish.book.title}</strong>
@@ -143,8 +167,13 @@ const Dashboard: React.FC = () => {
         </WishesContainer>
         <LoansContainer>
           <Title>
-            <FiBookOpen size={20} />
-            <p>Seus empréstimos</p>
+            <div>
+              <FiBookOpen size={20} />
+              <p>Seus empréstimos</p>
+            </div>
+            <Link to="/novoEmprestimo">
+              <FiPlus size={20} />
+            </Link>
           </Title>
         </LoansContainer>
       </Content>
