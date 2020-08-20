@@ -48,6 +48,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     localStorage.setItem('@Compartiler:token', token);
     localStorage.setItem('@Compartiler:user', JSON.stringify(user));
 
+    api.defaults.headers.authorization = `Bearer ${token}`;
+
     setData({ token, user });
   }, []);
 
