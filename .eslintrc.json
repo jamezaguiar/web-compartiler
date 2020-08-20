@@ -29,6 +29,7 @@
     "prettier"
   ],
   "rules": {
+    "camelcase": "off",
     "prettier/prettier": "error",
     "no-unused-expressions": "off",
     "spaced-comment": "off",
