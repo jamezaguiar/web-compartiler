@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { FiSearch } from 'react-icons/fi';
 import api from '../../services/api';
 
 import Header from '../../components/Header';
+import Button from '../../components/Button';
+
+import { SearchContainer, InputContainer } from './styles';
 
 interface BookStatusDTO {
   success: boolean;
@@ -43,26 +47,31 @@ const NewWish: React.FC = () => {
   return (
     <>
       <Header />
-      <input
-        type="text"
-        placeholder="titulo do livro"
-        value={searchTitle}
-        onChange={event => {
-          setSearchTitle(event.target.value);
-        }}
-      />
-      <button
-        type="submit"
-        onClick={async () => {
-          const response = await api.get(
-            `/externalAPI/searchBooksByTitle?title=${searchTitle}`,
-          );
+      <SearchContainer>
+        <InputContainer>
+          <FiSearch size={20} />
+          <input
+            type="text"
+            placeholder="Digite o titulo do livro que você quer buscar"
+            value={searchTitle}
+            onChange={event => {
+              setSearchTitle(event.target.value);
+            }}
+          />
+        </InputContainer>
+        <Button
+          type="submit"
+          onClick={async () => {
+            const response = await api.get(
+              `/externalAPI/searchBooksByTitle?title=${searchTitle}`,
+            );
 
-          setFetchedBooks(response.data);
-        }}
-      >
-        Buscar
-      </button>
+            setFetchedBooks(response.data);
+          }}
+        >
+          Buscar
+        </Button>
+      </SearchContainer>
     </>
   );
 };
