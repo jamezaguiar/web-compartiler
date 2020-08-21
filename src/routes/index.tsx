@@ -7,6 +7,7 @@ import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import Dashboard from '../pages/Dashboard';
 import NewBook from '../pages/NewBook';
+import NewWish from '../pages/NewWish';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -15,6 +16,7 @@ const Routes: React.FC = () => (
 
     <Route path="/inicio" component={Dashboard} isPrivate />
     <Route path="/novoLivro" component={NewBook} isPrivate />
+    <Route path="/novoDesejo" component={NewWish} isPrivate />
   </Switch>
 );
 
