@@ -1,55 +1,81 @@
 import styled from 'styled-components';
+import { shade } from 'polished';
 
-import isbnExampleImage from '../../assets/isbn-example.png';
-
-export const Container = styled.div`
-  height: 92vh;
+export const SearchContainer = styled.div`
   display: flex;
-  align-items: stretch;
-`;
 
-export const CardContainer = styled.div`
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
 
-  width: 100%;
-  max-width: 500px;
-
-  background-color: #fff;
-
-  border: 4px solid #e6e6e6;
-  border-radius: 16px;
-
-  margin: 32px 32px 32px 0;
-  padding: 16px;
+  margin: 16px 16px 0 16px;
 
   form {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 
-    width: 90%;
+    width: 100%;
+
+    input {
+      flex: 1;
+    }
+  }
+
+  button {
+    width: 150px;
+    height: 58px;
+    margin: 0 0 0 8px;
   }
 `;
 
-export const TextContainer = styled.div`
+export const BooksContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  margin: 16px 16px 0 16px;
+
+  overflow: auto;
+`;
+
+export const Book = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  text-align: center;
 
-  p {
-    font-size: 18px;
-    margin-bottom: 16px;
+  width: 400px;
+
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+
+    h1 {
+      text-align: center;
+      margin: 8px 0;
+    }
+
+    border: 2px solid #666360;
+    min-width: 350px;
+    width: auto;
+    height: 70vh;
+
+    margin-right: 8px;
+
+    background-color: ${shade(0.075, '#e8d6cb')};
+    border-radius: 4px;
+
+    img {
+      margin: 8px 0;
+      width: 128px;
+    }
   }
 `;
 
-export const Background = styled.div`
-  flex: 1;
-  background: url(${isbnExampleImage}) no-repeat center;
-  background-size: auto;
+export const SynopsisText = styled.p`
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  margin: 8px;
 `;

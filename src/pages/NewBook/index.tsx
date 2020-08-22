@@ -1,23 +1,55 @@
 import React, { useState, useRef, useCallback } from 'react';
+import { useHistory, Link } from 'react-router-dom';
 
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 
-import { FiBook } from 'react-icons/fi';
+import { FiSearch } from 'react-icons/fi';
 
 import * as Yup from 'yup';
-import { useHistory } from 'react-router-dom';
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import { useToast } from '../../hooks/toast';
 
-import { Container, Background, CardContainer, TextContainer } from './styles';
+import { SearchContainer, BooksContainer, SynopsisText, Book } from './styles';
 
 import Header from '../../components/Header';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
 import api from '../../services/api';
+
+interface BookStatusDTO {
+  success: boolean;
+  code: number;
+  message?: string;
+}
+
+interface BookDataDTO {
+  isbn: string;
+  titulo: string;
+  contribuicao: [
+    {
+      nome: string;
+      sobrenome: string;
+      tipo_de_contribuicao: string;
+      codigo_contribuicao: string;
+    },
+  ];
+  sinopse: string;
+  imagens: {
+    imagem_primeira_capa: {
+      pequena: string;
+      media: string;
+      grande: string;
+    };
+  };
+}
+
+interface APIResponseDTO {
+  books: BookDataDTO[];
+  status: BookStatusDTO;
+}
 
 interface RegisterBookFormData {
   isbn: string;
@@ -33,9 +65,15 @@ interface Book {
 
 const NewBook: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+
   const history = useHistory();
 
   const { addToast } = useToast();
+
+  const [fetchedBook, setFetchedBook] = useState<APIResponseDTO>(
+    {} as APIResponseDTO,
+  );
+  const [searchDone, setSearchDone] = useState(false);
 
   const handleSubmit = useCallback(
     async (data: RegisterBookFormData) => {
@@ -53,20 +91,23 @@ const NewBook: React.FC = () => {
           abortEarly: false,
         });
 
-        const response = await api.post<Book>(
-          'http://localhost:3333/books/register',
-          {
-            isbn: data.isbn,
-          },
+        const response = await api.get<APIResponseDTO>(
+          `/externalAPI/searchBookByISBN?isbn=${data.isbn}`,
         );
 
-        history.push('/inicio');
+        if (!response.data.status.success) {
+          addToast({
+            type: 'error',
+            title: 'Livro não encontrado',
+            description:
+              'Não foram encontrados nenhum livro com esse ISBN, tente novamente.',
+          });
 
-        addToast({
-          title: 'Livro adicionado com sucesso!',
-          type: 'success',
-          description: `O livro "${response.data.title}" foi adicionado!`,
-        });
+          return;
+        }
+
+        setFetchedBook(response.data);
+        setSearchDone(true);
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -78,9 +119,9 @@ const NewBook: React.FC = () => {
 
         addToast({
           type: 'error',
-          title: 'Erro no registro',
+          title: 'Erro na busca',
           description:
-            'Ocorreu um erro ao registar livro, verifique o ISBN e tente novamente',
+            'Ocorreu um erro ao buscar livro, verifique o ISBN e tente novamente.',
         });
       }
     },
@@ -90,23 +131,39 @@ const NewBook: React.FC = () => {
   return (
     <>
       <Header />
-      <Container>
-        <Background />
-        <CardContainer>
-          <TextContainer>
-            <p>
-              Digite abaixo o ISBN do seu livro. Você pode encontrá-lo conforme
-              a imagem ao lado.
-            </p>
-          </TextContainer>
-
-          <Form ref={formRef} onSubmit={handleSubmit}>
-            <Input name="isbn" icon={FiBook} placeholder="ISBN do seu livro" />
-
-            <Button type="submit">Registrar</Button>
-          </Form>
-        </CardContainer>
-      </Container>
+      <SearchContainer>
+        <Form ref={formRef} onSubmit={handleSubmit}>
+          <Input
+            name="isbn"
+            placeholder="Digite o ISBN do livro que você quer buscar"
+            icon={FiSearch}
+          />
+          <Button type="submit">Buscar</Button>
+        </Form>
+      </SearchContainer>
+      <BooksContainer>
+        {searchDone &&
+          fetchedBook.books.map(book => (
+            <Book key={book.isbn}>
+              <Link to={`/confirmarNovoLivro/${book.isbn}`}>
+                <img
+                  src={
+                    book.imagens.imagem_primeira_capa &&
+                    book.imagens.imagem_primeira_capa.grande
+                  }
+                  alt="Capa do livro"
+                />
+                <h1>{book.titulo}</h1>
+                <p>{`${book.contribuicao[0].nome} ${book.contribuicao[0].sobrenome}`}</p>
+                <SynopsisText>
+                  <strong>Sinopse: </strong>
+                  <br />
+                  {book.sinopse}
+                </SynopsisText>
+              </Link>
+            </Book>
+          ))}
+      </BooksContainer>
     </>
   );
 };
