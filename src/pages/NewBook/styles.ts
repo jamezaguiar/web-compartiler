@@ -43,6 +43,14 @@ export const BookContainer = styled.div`
 
 export const BookInformation = styled.div`
   max-width: 70vw;
+  max-height: 92vh;
+
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 
   div {
     display: flex;
@@ -64,6 +72,7 @@ export const BookInformation = styled.div`
 
   button {
     margin-top: 32px;
+    margin-bottom: 16px;
   }
 `;
 
