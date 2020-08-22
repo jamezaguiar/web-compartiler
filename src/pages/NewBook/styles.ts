@@ -25,57 +25,50 @@ export const SearchContainer = styled.div`
   }
 `;
 
-export const BooksContainer = styled.div`
+export const BookContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
-  margin: 16px 16px 0 16px;
+  width: 100vw;
+  height: 80vh;
 
-  overflow: auto;
+  padding: 16px;
+
+  img {
+    height: 75vh;
+    margin-right: 8px;
+  }
 `;
 
-export const Book = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+export const BookInformation = styled.div`
+  max-width: 70vw;
 
-  width: 400px;
-
-  a {
+  div {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    text-decoration: none;
+    justify-content: space-between;
+    a {
+      display: flex;
+      align-items: center;
 
+      text-decoration: none;
+    }
     h1 {
-      text-align: center;
-      margin: 8px 0;
+      font-size: 60px;
     }
-
-    border: 2px solid #666360;
-    min-width: 350px;
-    width: auto;
-    height: 70vh;
-
-    margin-right: 8px;
-
-    background-color: ${shade(0.075, '#e8d6cb')};
-    border-radius: 4px;
-
-    img {
-      margin: 8px 0;
-      width: 128px;
+    svg {
+      margin-right: 8px;
     }
+  }
+
+  button {
+    margin-top: 32px;
   }
 `;
 
 export const SynopsisText = styled.p`
-  overflow: auto;
-  &::-webkit-scrollbar {
-    display: none;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
+  text-align: justify;
 
-  margin: 8px;
+  margin-top: 32px;
 `;

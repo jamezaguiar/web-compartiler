@@ -11,7 +11,12 @@ import getValidationErrors from '../../utils/getValidationErrors';
 
 import { useToast } from '../../hooks/toast';
 
-import { SearchContainer, BooksContainer, SynopsisText, Book } from './styles';
+import {
+  SearchContainer,
+  SynopsisText,
+  BookContainer,
+  BookInformation,
+} from './styles';
 
 import Header from '../../components/Header';
 import Input from '../../components/Input';
@@ -70,9 +75,8 @@ const NewBook: React.FC = () => {
 
   const { addToast } = useToast();
 
-  const [fetchedBook, setFetchedBook] = useState<APIResponseDTO>(
-    {} as APIResponseDTO,
-  );
+  const [book, setBook] = useState<BookDataDTO>({} as BookDataDTO);
+
   const [searchDone, setSearchDone] = useState(false);
 
   const handleSubmit = useCallback(
@@ -106,7 +110,7 @@ const NewBook: React.FC = () => {
           return;
         }
 
-        setFetchedBook(response.data);
+        setBook(response.data.books[0]);
         setSearchDone(true);
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -141,29 +145,33 @@ const NewBook: React.FC = () => {
           <Button type="submit">Buscar</Button>
         </Form>
       </SearchContainer>
-      <BooksContainer>
-        {searchDone &&
-          fetchedBook.books.map(book => (
-            <Book key={book.isbn}>
-              <Link to={`/confirmarNovoLivro/${book.isbn}`}>
-                <img
-                  src={
-                    book.imagens.imagem_primeira_capa &&
-                    book.imagens.imagem_primeira_capa.grande
-                  }
-                  alt="Capa do livro"
-                />
-                <h1>{book.titulo}</h1>
-                <p>{`${book.contribuicao[0].nome} ${book.contribuicao[0].sobrenome}`}</p>
-                <SynopsisText>
-                  <strong>Sinopse: </strong>
-                  <br />
-                  {book.sinopse}
-                </SynopsisText>
-              </Link>
-            </Book>
-          ))}
-      </BooksContainer>
+      {searchDone && (
+        <BookContainer>
+          <img
+            src={
+              book.imagens.imagem_primeira_capa &&
+              book.imagens.imagem_primeira_capa.grande
+            }
+            alt="Capa do livro"
+          />
+          <BookInformation>
+            <h1>{book.titulo}</h1>
+            <p>{`de ${book.contribuicao[0].nome} ${book.contribuicao[0].sobrenome}`}</p>
+            <SynopsisText>
+              <strong>Sinopse: </strong>
+              <br />
+              {book.sinopse}
+            </SynopsisText>
+            <Button
+              onClick={() => {
+                console.log('handleAddBookAsANewWish');
+              }}
+            >
+              Adicionar
+            </Button>
+          </BookInformation>
+        </BookContainer>
+      )}
     </>
   );
 };
