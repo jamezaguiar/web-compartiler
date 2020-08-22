@@ -39,6 +39,8 @@ export const Book = styled.div`
   flex-direction: column;
   align-items: center;
 
+  width: 400px;
+
   a {
     display: flex;
     flex-direction: column;
