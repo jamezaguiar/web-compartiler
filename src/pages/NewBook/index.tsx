@@ -132,6 +132,32 @@ const NewBook: React.FC = () => {
     [addToast],
   );
 
+  const handleAddBookAsANewBook = useCallback(
+    async (isbn: string) => {
+      try {
+        const response = await api.post<Book>('/books/register', {
+          isbn,
+        });
+
+        addToast({
+          type: 'success',
+          title: 'Livro registrado com sucesso',
+          description: `O livro "${response.data.title}" foi adicionado aos seus livros!`,
+        });
+
+        history.push('/inicio');
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro ao registrar livro',
+          description:
+            'Não foi possível adicionar livro a sua lista de livros, tente novamente.',
+        });
+      }
+    },
+    [addToast, history],
+  );
+
   return (
     <>
       <Header />
@@ -164,7 +190,7 @@ const NewBook: React.FC = () => {
             </SynopsisText>
             <Button
               onClick={() => {
-                console.log('handleAddBookAsANewWish');
+                handleAddBookAsANewBook(book.isbn);
               }}
             >
               Adicionar
