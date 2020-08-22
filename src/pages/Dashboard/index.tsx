@@ -129,7 +129,7 @@ const Dashboard: React.FC = () => {
           </Title>
           {books.map(book => (
             <Book key={book.id}>
-              <Link to="/livro">
+              <Link to={`/livro/${book.isbn}`}>
                 <img src={book.cover_url} alt="Capa do livro" />
                 <div>
                   <strong>{book.title}</strong>
@@ -153,7 +153,7 @@ const Dashboard: React.FC = () => {
           </Title>
           {wishes.map(wish => (
             <Book key={wish.book.isbn}>
-              <Link to="/livro">
+              <Link to={`/livro/${wish.book.isbn}`}>
                 <img src={wish.book.cover_url} alt="Capa do livro" />
                 <div>
                   <strong>{wish.book.title}</strong>
