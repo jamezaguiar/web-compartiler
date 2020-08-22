@@ -11,7 +11,8 @@ export const BookContainer = styled.div`
   padding: 16px;
 
   img {
-    height: 80vh;
+    height: 75vh;
+    margin-right: 8px;
   }
 `;
 
@@ -29,7 +30,7 @@ export const BookInformation = styled.div`
       text-decoration: none;
     }
     h1 {
-      font-size: 64px;
+      font-size: 60px;
     }
     svg {
       margin-right: 8px;

@@ -111,7 +111,10 @@ const ConfirmNewWish: React.FC = () => {
       {searchDone && (
         <BookContainer>
           <img
-            src="https://i0.wp.com/www.guiada3aidade.com.br/wp-content/uploads/2018/10/sem-capa.jpg"
+            src={
+              book.imagens.imagem_primeira_capa &&
+              book.imagens.imagem_primeira_capa.grande
+            }
             alt="Capa do livro"
           />
           <BookInformation>
