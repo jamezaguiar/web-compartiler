@@ -6,6 +6,7 @@ import Route from './Route';
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import Dashboard from '../pages/Dashboard';
+import BookInformation from '../pages/BookInformation';
 import NewBook from '../pages/NewBook';
 import NewWish from '../pages/NewWish';
 import ConfirmNewWish from '../pages/NewWish/ConfirmNewWish';
@@ -16,6 +17,8 @@ const Routes: React.FC = () => (
     <Route path="/cadastrar" component={SignUp} />
 
     <Route path="/inicio" component={Dashboard} isPrivate />
+
+    <Route path="/livro/:isbn" component={BookInformation} isPrivate />
 
     <Route path="/novoLivro" component={NewBook} isPrivate />
 
