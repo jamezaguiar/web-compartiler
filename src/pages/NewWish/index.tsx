@@ -112,7 +112,7 @@ const NewWish: React.FC = () => {
           type: 'error',
           title: 'Erro na busca',
           description:
-            'Ocorreu um erro ao buscar livro, verifique o titulo e tente novamente',
+            'Ocorreu um erro ao buscar livro, verifique o titulo e tente novamente.',
         });
       }
     },
