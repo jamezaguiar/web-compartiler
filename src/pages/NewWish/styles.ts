@@ -50,3 +50,41 @@ export const InputContainer = styled.div`
     margin-right: 16px;
   }
 `;
+
+export const BooksContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  margin: 16px 16px 0 16px;
+
+  overflow: auto;
+`;
+
+export const Book = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border: 2px solid #666360;
+  min-width: 25vw;
+  max-width: 25vw;
+  height: 70vh;
+
+  margin-right: 8px;
+
+  background-color: ${shade(0.075, '#e8d6cb')};
+  border-radius: 4px;
+
+  img {
+    margin: 8px 0;
+    width: 128px;
+  }
+`;
+
+export const SynopsisText = styled.p`
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  margin: 4px;
+`;

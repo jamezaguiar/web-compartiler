@@ -5,7 +5,13 @@ import api from '../../services/api';
 import Header from '../../components/Header';
 import Button from '../../components/Button';
 
-import { SearchContainer, InputContainer } from './styles';
+import {
+  SearchContainer,
+  InputContainer,
+  BooksContainer,
+  Book,
+  SynopsisText,
+} from './styles';
 
 interface BookStatusDTO {
   success: boolean;
@@ -14,6 +20,7 @@ interface BookStatusDTO {
 }
 
 interface BookDataDTO {
+  isbn: string;
   titulo: string;
   contribuicao: [
     {
@@ -43,6 +50,7 @@ const NewWish: React.FC = () => {
   const [fetchedBooks, setFetchedBooks] = useState<APIResponseDTO>(
     {} as APIResponseDTO,
   );
+  const [searchDone, setSearchDone] = useState(false);
 
   return (
     <>
@@ -67,11 +75,30 @@ const NewWish: React.FC = () => {
             );
 
             setFetchedBooks(response.data);
+            setSearchDone(true);
           }}
         >
           Buscar
         </Button>
       </SearchContainer>
+      <BooksContainer>
+        {searchDone &&
+          fetchedBooks.books.map(book => (
+            <Book key={book.isbn}>
+              <img
+                src={book.imagens.imagem_primeira_capa.grande}
+                alt="Capa do livro"
+              />
+              <h1>{book.titulo}</h1>
+              <p>{`${book.contribuicao[0].nome} ${book.contribuicao[0].sobrenome}`}</p>
+              <SynopsisText>
+                <strong>Sinopse: </strong>
+                <br />
+                {book.sinopse}
+              </SynopsisText>
+            </Book>
+          ))}
+      </BooksContainer>
     </>
   );
 };
