@@ -30,12 +30,38 @@ export const Title = styled.div`
   }
 `;
 
+export const LoanOption = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  a {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    color: #ea7317;
+    transition: color 0.2s;
+    &:hover {
+      color: ${shade(0.2, '#ea7317')};
+    }
+    svg {
+      stroke: #ea7317;
+      transition: stroke 0.2s;
+      &:hover {
+        stroke: ${shade(0.2, '#ea7317')};
+      }
+    }
+  }
+`;
+
 export const BooksContainer = styled.div`
   display: flex;
   flex-direction: column;
 
   height: 80vh;
-  width: 30vw;
+  width: 35vw;
 
   padding: 2px;
 
@@ -97,7 +123,7 @@ export const WishesContainer = styled.div`
   flex-direction: column;
 
   height: 80vh;
-  width: 30vw;
+  width: 35vw;
 
   padding: 2px;
 
@@ -116,9 +142,10 @@ export const WishesContainer = styled.div`
 export const LoansContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
 
   height: 80vh;
-  width: 30vw;
+  width: 20vw;
 
   padding: 2px;
 

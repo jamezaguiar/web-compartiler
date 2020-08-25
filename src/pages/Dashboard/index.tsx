@@ -6,9 +6,11 @@ import {
   FiChevronRight,
   FiBook,
   FiBookmark,
-  FiBookOpen,
+  FiShare2,
   FiPlus,
+  FiBell,
 } from 'react-icons/fi';
+
 import api from '../../services/api';
 
 import { useAuth } from '../../hooks/auth';
@@ -23,6 +25,7 @@ import {
   Book,
   WishesContainer,
   LoansContainer,
+  LoanOption,
 } from './styles';
 
 interface Book {
@@ -166,15 +169,24 @@ const Dashboard: React.FC = () => {
           ))}
         </WishesContainer>
         <LoansContainer>
-          <Title>
-            <div>
-              <FiBookOpen size={20} />
-              <p>Seus empréstimos</p>
-            </div>
+          <LoanOption>
             <Link to="/novoEmprestimo">
-              <FiPlus size={20} />
+              <FiPlus size={64} />
+              Novo empréstimo
             </Link>
-          </Title>
+          </LoanOption>
+          <LoanOption>
+            <Link to="/solicitacoesDeEmprestimos">
+              <FiBell size={64} />
+              Solicitações
+            </Link>
+          </LoanOption>
+          <LoanOption>
+            <Link to="/livrosEmprestados">
+              <FiShare2 size={64} />
+              Emprestados
+            </Link>
+          </LoanOption>
         </LoansContainer>
       </Content>
     </>
