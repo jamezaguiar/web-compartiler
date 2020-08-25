@@ -5,11 +5,16 @@ import Route from './Route';
 
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
+
 import Dashboard from '../pages/Dashboard';
-import BookInformation from '../pages/BookInformation';
+
 import NewBook from '../pages/NewBook';
+import BookInformation from '../pages/BookInformation';
+
 import NewWish from '../pages/NewWish';
 import ConfirmNewWish from '../pages/NewWish/ConfirmNewWish';
+
+import LoansRequests from '../pages/LoansRequests';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -26,6 +31,12 @@ const Routes: React.FC = () => (
     <Route
       path="/confirmarNovoDesejo/:isbn"
       component={ConfirmNewWish}
+      isPrivate
+    />
+
+    <Route
+      path="/solicitacoesDeEmprestimos/:user_id"
+      component={LoansRequests}
       isPrivate
     />
   </Switch>
