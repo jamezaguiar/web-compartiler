@@ -176,15 +176,15 @@ const Dashboard: React.FC = () => {
             </Link>
           </LoanOption>
           <LoanOption>
-            <Link to="/solicitacoesDeEmprestimos">
+            <Link to={`/solicitacoesDeEmprestimos/${user.id}`}>
               <FiBell size={64} />
-              Solicitações
+              Solicitações de empréstimos
             </Link>
           </LoanOption>
           <LoanOption>
             <Link to="/livrosEmprestados">
               <FiShare2 size={64} />
-              Emprestados
+              Livros emprestados
             </Link>
           </LoanOption>
         </LoansContainer>
