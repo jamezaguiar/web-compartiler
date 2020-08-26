@@ -41,7 +41,7 @@ const Routes: React.FC = () => (
       component={LoansRequests}
       isPrivate
     />
-    <Route path="/contato/:requester_id" component={Contact} isPrivate />
+    <Route path="/contato/:loan_id" component={Contact} isPrivate />
   </Switch>
 );
 

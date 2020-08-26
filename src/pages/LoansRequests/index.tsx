@@ -64,7 +64,7 @@ const LoansRequests: React.FC = () => {
   }, [params.user_id]);
 
   const handleAcceptLoan = useCallback(
-    async (loan_id, requester_id) => {
+    async loan_id => {
       try {
         await api.put(`/loans/acceptLoan/${loan_id}`);
 
@@ -75,7 +75,7 @@ const LoansRequests: React.FC = () => {
             setSearchDone(true);
           });
 
-        history.push(`/contato/${requester_id}`);
+        history.push(`/contato/${loan_id}`);
 
         addToast({
           type: 'success',
@@ -150,17 +150,17 @@ const LoansRequests: React.FC = () => {
                   <td>
                     <Button
                       onClick={() => {
-                        handleAcceptLoan(loan.id, loan.requester_id);
+                        handleAcceptLoan(loan.id);
                       }}
                     >
-                      <FiCheckCircle size={24} style={{ stroke: '#3CB371' }} />
+                      <FiCheckCircle size={32} style={{ stroke: '#3CB371' }} />
                     </Button>
                     <Button
                       onClick={() => {
                         handleRejectLoan(loan.id);
                       }}
                     >
-                      <FiXCircle size={24} style={{ stroke: '#DC143C' }} />
+                      <FiXCircle size={32} style={{ stroke: '#DC143C' }} />
                     </Button>
                   </td>
                 </tr>
