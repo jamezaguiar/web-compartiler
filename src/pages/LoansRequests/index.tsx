@@ -64,23 +64,33 @@ const LoansRequests: React.FC = () => {
   }, [params.user_id]);
 
   const handleAcceptLoan = useCallback(
-    async loan_id => {
-      await api.put(`/loans/acceptLoan/${loan_id}`);
+    async (loan_id, requester_id) => {
+      try {
+        await api.put(`/loans/acceptLoan/${loan_id}`);
 
-      api
-        .get<Loan[]>(`/loans/requestedLoans/${params.user_id}`)
-        .then(response => {
-          setLoans(response.data);
-          setSearchDone(true);
+        api
+          .get<Loan[]>(`/loans/requestedLoans/${params.user_id}`)
+          .then(response => {
+            setLoans(response.data);
+            setSearchDone(true);
+          });
+
+        history.push(`/contato/${requester_id}`);
+
+        addToast({
+          type: 'success',
+          title: 'Sucesso!',
+          description: 'Entre em contato com o dono do livro!',
         });
-
-      addToast({
-        type: 'success',
-        title: 'Sucesso!',
-        description: 'Redirecionar usuário para página de contato.',
-      });
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro',
+          description: 'Não foi possível aceitar empréstimo, tente novamente.',
+        });
+      }
     },
-    [addToast, params.user_id],
+    [addToast, history, params.user_id],
   );
 
   const handleRejectLoan = useCallback(
@@ -140,7 +150,7 @@ const LoansRequests: React.FC = () => {
                   <td>
                     <Button
                       onClick={() => {
-                        handleAcceptLoan(loan.id);
+                        handleAcceptLoan(loan.id, loan.requester_id);
                       }}
                     >
                       <FiCheckCircle size={24} style={{ stroke: '#3CB371' }} />
