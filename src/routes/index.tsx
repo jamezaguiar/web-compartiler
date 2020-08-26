@@ -16,6 +16,8 @@ import ConfirmNewWish from '../pages/NewWish/ConfirmNewWish';
 
 import LoansRequests from '../pages/LoansRequests';
 
+import Contact from '../pages/Contact';
+
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={SignIn} />
@@ -39,6 +41,7 @@ const Routes: React.FC = () => (
       component={LoansRequests}
       isPrivate
     />
+    <Route path="/contato/:requester_id" component={Contact} isPrivate />
   </Switch>
 );
 
