@@ -39,6 +39,11 @@ export const LoansTable = styled.table`
       border: 1px solid #ddd;
       text-align: center;
 
+      img {
+        width: 128px;
+        margin: 4px;
+      }
+
       button {
         width: auto;
         padding: 16px;
