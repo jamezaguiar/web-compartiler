@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 
+import { FaWhatsapp, FaEnvelope } from 'react-icons/fa';
 import api from '../../services/api';
 
-import { PageTitle } from './styles';
+import { PageTitle, ContactInfo, BookInfo } from './styles';
 
 import Header from '../../components/Header';
+import Button from '../../components/Button';
 
 interface ContactParams {
   loan_id: string;
@@ -62,10 +64,36 @@ const Contact: React.FC = () => {
       </PageTitle>
       {searchDone && (
         <div>
-          <h1>{loan.requester.name}</h1>
-          <h1>{loan.requester.email}</h1>
-          <h1>{loan.requester?.whatsapp}</h1>
-          <h1>{loan.book.title}</h1>
+          <ContactInfo>
+            <h1>
+              Fale com <span>{loan.requester.name}</span> através de
+            </h1>
+            <div>
+              <a
+                href={`mailto:${loan.requester.email}?subject=Empréstimo%20confirmado!&body=Onde%20nos%20encontraremos%20para%20Compartiler?`}
+                target="blank"
+              >
+                <Button>
+                  <FaEnvelope size={20} />
+                  E-mail
+                </Button>
+              </a>
+              {loan.requester.whatsapp && (
+                <a
+                  href={`https://api.whatsapp.com/send?phone=${loan.requester.whatsapp}`}
+                  target="blank"
+                >
+                  <Button>
+                    <FaWhatsapp size={20} />
+                    Whatsapp
+                  </Button>
+                </a>
+              )}
+            </div>
+          </ContactInfo>
+          <BookInfo>
+            <h1>{loan.book.title}</h1>
+          </BookInfo>
         </div>
       )}
     </>
