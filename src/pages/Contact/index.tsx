@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useRouteMatch } from 'react-router-dom';
+import { useRouteMatch, Link } from 'react-router-dom';
 
 import { FaWhatsapp, FaEnvelope } from 'react-icons/fa';
-import api from '../../services/api';
+import { FiArrowLeft } from 'react-icons/fi';
 
-import { PageTitle, ContactInfo, BookInfo } from './styles';
+import api from '../../services/api';
+import { useAuth } from '../../hooks/auth';
+
+import {
+  PageTitle,
+  ContactInfo,
+  BookContainer,
+  BookInformation,
+} from './styles';
 
 import Header from '../../components/Header';
 import Button from '../../components/Button';
@@ -45,6 +53,8 @@ interface Loan {
 
 const Contact: React.FC = () => {
   const { params } = useRouteMatch<ContactParams>();
+
+  const { user } = useAuth();
 
   const [loan, setLoan] = useState<Loan>({} as Loan);
   const [searchDone, setSearchDone] = useState(false);
@@ -91,9 +101,18 @@ const Contact: React.FC = () => {
               )}
             </div>
           </ContactInfo>
-          <BookInfo>
-            <h1>{loan.book.title}</h1>
-          </BookInfo>
+          <BookContainer>
+            <img src={loan.book.cover_url} alt="Capa do livro" />
+            <BookInformation>
+              <div>
+                <h1>{`Livro "${loan.book.title}"`}</h1>
+                <Link to={`/solicitacoesDeEmprestimos/${user.id}`}>
+                  <FiArrowLeft size={20} /> Voltar
+                </Link>
+              </div>
+              <p>{`de ${loan.book.author}`}</p>
+            </BookInformation>
+          </BookContainer>
         </div>
       )}
     </>

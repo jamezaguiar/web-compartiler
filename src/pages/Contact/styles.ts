@@ -50,4 +50,49 @@ export const ContactInfo = styled.div`
   }
 `;
 
-export const BookInfo = styled.div``;
+export const BookContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  padding: 16px;
+
+  img {
+    height: 50vh;
+  }
+`;
+
+export const BookInformation = styled.div`
+  width: 100%;
+  height: auto;
+
+  padding: 16px;
+
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    a {
+      display: flex;
+      align-items: center;
+
+      text-decoration: none;
+    }
+    h1 {
+      font-size: 48px;
+    }
+    svg {
+      margin-right: 8px;
+    }
+  }
+
+  p {
+    font-size: 24px;
+  }
+`;
