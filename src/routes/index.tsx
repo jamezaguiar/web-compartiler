@@ -15,8 +15,8 @@ import NewWish from '../pages/NewWish';
 import ConfirmNewWish from '../pages/NewWish/ConfirmNewWish';
 
 import LoansRequests from '../pages/LoansRequests';
-
 import Contact from '../pages/Contact';
+import NewLoan from '../pages/NewLoan';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -25,9 +25,8 @@ const Routes: React.FC = () => (
 
     <Route path="/inicio" component={Dashboard} isPrivate />
 
-    <Route path="/livro/:isbn" component={BookInformation} isPrivate />
-
     <Route path="/novoLivro" component={NewBook} isPrivate />
+    <Route path="/livro/:isbn" component={BookInformation} isPrivate />
 
     <Route path="/novoDesejo" component={NewWish} isPrivate />
     <Route
@@ -42,6 +41,7 @@ const Routes: React.FC = () => (
       isPrivate
     />
     <Route path="/contato/:loan_id" component={Contact} isPrivate />
+    <Route path="/novoEmprestimo" component={NewLoan} isPrivate />
   </Switch>
 );
 
