@@ -111,7 +111,7 @@ const Dashboard: React.FC = () => {
       addToast({
         title: 'Opa!',
         type: 'info',
-        description: `Algúem no Compartiler tem o livro "${possibility.title}"!`,
+        description: `Alguém no Compartiler tem o livro "${possibility.title}". Entre na página "Novo Empréstimo" e confira!`,
       });
     });
   }, [addToast, possibleLoans]);
