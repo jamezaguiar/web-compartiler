@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { FiBookOpen } from 'react-icons/fi';
 
 import { useAuth } from '../../hooks/auth';
+import { useToast } from '../../hooks/toast';
 
 import Header from '../../components/Header';
 import Button from '../../components/Button';
@@ -28,11 +29,31 @@ interface Book {
   owner: User;
 }
 
+interface Loan {
+  id: string;
+  requester_id: string;
+  book_owner_id: string;
+  book_isbn: string;
+  book_id: string;
+  status: 'accepted' | 'rejected' | 'returned' | 'requested';
+  received_at: Date;
+  returned_at: Date;
+  book: Book;
+  book_owner: User;
+  requester: User;
+}
+
+interface RequestLoanResponseDTO {
+  book: Book;
+  loan: Loan;
+}
+
 const NewLoan: React.FC = () => {
   const [availableBooks, setAvailableBooks] = useState<Book[]>([{} as Book]);
   const [searchDone, setSearchDone] = useState(false);
 
   const { user } = useAuth();
+  const { addToast } = useToast();
 
   useEffect(() => {
     api.get<Book[]>(`/books/listAvailable/${user.id}`).then(response => {
@@ -41,9 +62,34 @@ const NewLoan: React.FC = () => {
     });
   }, [user.id]);
 
-  const handleRequestLoan = useCallback(() => {
-    console.log('handleRequestLoan');
-  }, []);
+  const handleRequestLoan = useCallback(
+    async (book_isbn, book_owner_id) => {
+      try {
+        const response = await api.post<RequestLoanResponseDTO>(
+          '/loans/request',
+          {
+            book_isbn,
+            book_owner_id,
+            requester_id: user.id,
+          },
+        );
+
+        addToast({
+          type: 'success',
+          title: 'Solicitação feita',
+          description: `Você solicitou o livro "${response.data.book.title}", aguarde a resposta do dono do livro.`,
+        });
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Algo deu errado',
+          description:
+            'Não conseguimos fazer a solicitação do livro, tente novamente.',
+        });
+      }
+    },
+    [addToast, user.id],
+  );
 
   return (
     <>
@@ -71,7 +117,13 @@ const NewLoan: React.FC = () => {
                 </td>
                 <td>{book.owner.name}</td>
                 <td>
-                  <Button>Solicitar</Button>
+                  <Button
+                    onClick={() => {
+                      handleRequestLoan(book.isbn, book.owner.id);
+                    }}
+                  >
+                    Solicitar
+                  </Button>
                 </td>
               </tr>
             ))}
