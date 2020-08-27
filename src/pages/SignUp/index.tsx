@@ -5,13 +5,12 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 
 import * as Yup from 'yup';
+import { FiUser, FiMail, FiLock, FiSmartphone, FiLogOut } from 'react-icons/fi';
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import { useToast } from '../../hooks/toast';
 
 import { Container, Background, CardContainer, TextContainer } from './styles';
-
-import { FiUser, FiMail, FiLock, FiSmartphone, FiLogOut } from 'react-icons/fi';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
@@ -43,7 +42,9 @@ const SignUp: React.FC = () => {
           email: Yup.string()
             .required('E-mail obrigatório.')
             .email('Digite um e-mail válido.'),
-          whatsapp: Yup.string().matches(phoneRegex, 'Ex: 85912345678'),
+          whatsapp: Yup.string()
+            .required('Para facilitar o contato, pedimos o seu Whatsapp')
+            .matches(phoneRegex, 'Ex: 85912345678'),
           password: Yup.string()
             .required('Senha obrigatória.')
             .min(8, 'Sua senha deve ter no mínimo 8 caracteres.'),
@@ -90,7 +91,7 @@ const SignUp: React.FC = () => {
           </h1>
           <p>
             Encontre um livro que você quer ler e alguém que queira o emprestar.
-            <br></br>
+            <br />
             <span>Saiba mais.</span>
           </p>
         </TextContainer>
