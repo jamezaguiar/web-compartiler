@@ -109,6 +109,11 @@ export const Book = styled.div`
       p {
         font-size: 16px;
         color: #a8a8b3;
+
+        & + p {
+          font-weight: 200;
+          font-style: italic;
+        }
       }
     }
 

@@ -137,6 +137,7 @@ const Dashboard: React.FC = () => {
                 <div>
                   <strong>{book.title}</strong>
                   <p>{book.author}</p>
+                  {book.borrowed && <p>Emprestado</p>}
                 </div>
 
                 <FiChevronRight size={20} />
