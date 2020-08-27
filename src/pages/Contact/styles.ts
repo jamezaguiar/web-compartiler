@@ -6,6 +6,8 @@ export const PageTitle = styled.h1`
 
   margin: 32px 0;
 
+  font-size: 48px;
+
   span {
     font-family: 'Merienda One', cursive;
     color: #ff3c38;

@@ -69,15 +69,12 @@ const Contact: React.FC = () => {
   return (
     <>
       <Header />
-      <PageTitle>
-        Entre em <span>contato</span>
-      </PageTitle>
       {searchDone && (
         <div>
           <ContactInfo>
-            <h1>
+            <PageTitle>
               Fale com <span>{loan.requester.name}</span> através de
-            </h1>
+            </PageTitle>
             <div>
               <a
                 href={`mailto:${loan.requester.email}?subject=Empréstimo%20confirmado!&body=Onde%20nos%20encontraremos%20para%20Compartiler?`}
