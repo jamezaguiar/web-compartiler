@@ -63,7 +63,7 @@ const NewLoan: React.FC = () => {
   }, [user.id]);
 
   const handleRequestLoan = useCallback(
-    async (book_isbn, book_owner_id) => {
+    async (book_isbn, book_owner_id, book_owner_name) => {
       try {
         const response = await api.post<RequestLoanResponseDTO>(
           '/loans/request',
@@ -77,7 +77,7 @@ const NewLoan: React.FC = () => {
         addToast({
           type: 'success',
           title: 'Solicitação feita',
-          description: `Você solicitou o livro "${response.data.book.title}", aguarde a resposta do dono do livro.`,
+          description: `Você solicitou o livro "${response.data.book.title}", aguarde a resposta de ${book_owner_name}.`,
         });
       } catch (err) {
         addToast({
@@ -119,7 +119,11 @@ const NewLoan: React.FC = () => {
                 <td>
                   <Button
                     onClick={() => {
-                      handleRequestLoan(book.isbn, book.owner.id);
+                      handleRequestLoan(
+                        book.isbn,
+                        book.owner.id,
+                        book.owner.name,
+                      );
                     }}
                   >
                     Solicitar
