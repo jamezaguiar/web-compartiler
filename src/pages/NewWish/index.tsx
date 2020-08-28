@@ -80,8 +80,10 @@ const NewWish: React.FC = () => {
           abortEarly: false,
         });
 
+        const formattedTitle = data.title.replace(' ', '%20');
+
         const response = await api.get<APIResponseDTO>(
-          `/externalAPI/searchBooksByTitle?title=${data.title}`,
+          `/externalAPI/searchBooksByTitle?title=${formattedTitle}`,
         );
 
         if (!response.data.status.success) {
