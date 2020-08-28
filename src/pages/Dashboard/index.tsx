@@ -67,7 +67,7 @@ const Dashboard: React.FC = () => {
   const { addToast } = useToast();
 
   useEffect(() => {
-    const socket = socketio('http://localhost:3333', {
+    const socket = socketio('https://compartiler.herokuapp.com/', {
       query: { id, name },
     });
 
