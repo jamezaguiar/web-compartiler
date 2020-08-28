@@ -22,6 +22,7 @@ interface Book {
   synopsis: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Wish {}
 
 interface RegisterWishResponseDTO {

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { FiSearch } from 'react-icons/fi';
 
