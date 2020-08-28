@@ -98,11 +98,7 @@ const SignUp: React.FC = () => {
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Input name="name" icon={FiUser} placeholder="Nome" />
           <Input name="email" icon={FiMail} placeholder="E-mail" />
-          <Input
-            name="whatsapp"
-            icon={FiSmartphone}
-            placeholder="Whatsapp (opcional)"
-          />
+          <Input name="whatsapp" icon={FiSmartphone} placeholder="Whatsapp" />
           <Input
             type="password"
             icon={FiLock}
