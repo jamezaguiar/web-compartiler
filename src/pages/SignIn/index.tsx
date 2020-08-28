@@ -78,11 +78,7 @@ const SignIn: React.FC = () => {
           <h1>
             Comparti<span>ler</span>
           </h1>
-          <p>
-            Ajude pessoas a adquirirem conhecimento através dos livros.
-            <br />
-            <span>Saiba mais.</span>
-          </p>
+          <p>Ajude pessoas a adquirirem conhecimento através dos livros.</p>
         </TextContainer>
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Input name="email" icon={FiMail} placeholder="E-mail" />

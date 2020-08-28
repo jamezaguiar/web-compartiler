@@ -91,8 +91,6 @@ const SignUp: React.FC = () => {
           </h1>
           <p>
             Encontre um livro que você quer ler e alguém que queira o emprestar.
-            <br />
-            <span>Saiba mais.</span>
           </p>
         </TextContainer>
         <Form ref={formRef} onSubmit={handleSubmit}>
