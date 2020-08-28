@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
+
+import { parseISO, formatRelative } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 
 import { useAuth } from '../../hooks/auth';
+import { useToast } from '../../hooks/toast';
 
 import Header from '../../components/Header';
 import Button from '../../components/Button';
@@ -31,9 +36,9 @@ interface Loan {
   book_owner_id: string;
   book_isbn: string;
   book_id: string;
-  status: 'accepted' | 'rejected' | 'returned' | 'requested';
-  received_at: Date;
-  returned_at: Date;
+  status: 'requested' | 'accepted' | 'rejected' | 'delivered' | 'returned';
+  received_at: string;
+  returned_at: string;
   book: Book;
   book_owner: User;
   requester: User;
@@ -50,6 +55,7 @@ const Loans: React.FC = () => {
   );
 
   const { user } = useAuth();
+  const { addToast } = useToast();
 
   useEffect(() => {
     api.get<Loan[]>(`/loans/listUserLoans/${user.id}`).then(response => {
@@ -67,12 +73,74 @@ const Loans: React.FC = () => {
       });
   }, [user.id]);
 
-  const handleDeliverBook = useCallback(() => {
-    // TODO
-  }, []);
-  const handleReceiveBook = useCallback(() => {
-    // TODO
-  }, []);
+  const handleDeliverBook = useCallback(
+    async loan_id => {
+      try {
+        const response = await api.put<Loan>(`/loans/deliverBook/${loan_id}`);
+        const book_title = response.data.book.title;
+        const requester_name = response.data.requester.name;
+
+        api.get<Loan[]>(`/loans/listUserLoans/${user.id}`).then(res => {
+          setUserLoans(res.data);
+          setSearchUserLoansDone(true);
+        });
+
+        api
+          .get<Loan[]>(`/loans/listUserRequestedLoans/${user.id}`)
+          .then(res => {
+            setUserRequestedLoans(res.data);
+            setSearchRequestedLoansDone(true);
+          });
+
+        addToast({
+          type: 'success',
+          title: 'Entregue!',
+          description: `Você entregou o livro ${book_title} para ${requester_name}`,
+        });
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro',
+          description: 'Não foi possível fazer entrega livro, tente novamente',
+        });
+      }
+    },
+    [addToast, user.id],
+  );
+  const handleReceiveBook = useCallback(
+    async loan_id => {
+      try {
+        const response = await api.put<Loan>(`/loans/receiveBook/${loan_id}`);
+        const book_title = response.data.book.title;
+        const requester_name = response.data.requester.name;
+
+        api.get<Loan[]>(`/loans/listUserLoans/${user.id}`).then(res => {
+          setUserLoans(res.data);
+          setSearchUserLoansDone(true);
+        });
+
+        api
+          .get<Loan[]>(`/loans/listUserRequestedLoans/${user.id}`)
+          .then(res => {
+            setUserRequestedLoans(res.data);
+            setSearchRequestedLoansDone(true);
+          });
+
+        addToast({
+          type: 'success',
+          title: 'Recebido!',
+          description: `Você recebeu de volta o livro ${book_title} de ${requester_name}`,
+        });
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro',
+          description: 'Não foi possível receber livro, tente novamente',
+        });
+      }
+    },
+    [addToast, user.id],
+  );
 
   return (
     <>
@@ -87,12 +155,14 @@ const Loans: React.FC = () => {
             <th>Titulo</th>
             <th>Pedido por</th>
             <th>Entregue</th>
-            <th>Devolvido</th>
             <th>Ação</th>
           </tr>
           {searchUserLoansDone &&
             userLoans
-              .filter(loan => loan.status === 'accepted')
+              .filter(
+                loan =>
+                  loan.status === 'accepted' || loan.status === 'delivered',
+              )
               .map(loan => (
                 <tr key={loan.id}>
                   <td>
@@ -101,20 +171,30 @@ const Loans: React.FC = () => {
                   <td>
                     <strong>{loan.book.title}</strong>
                   </td>
-                  <td>{loan.requester.name}</td>
-                  <td>{loan.received_at}</td>
-                  <td>{loan.returned_at}</td>
+                  <td>
+                    <Link to={`/contato/${loan.id}`}>
+                      {loan.requester.name}
+                    </Link>
+                  </td>
+                  <td>
+                    {loan.received_at &&
+                      formatRelative(parseISO(loan.received_at), new Date(), {
+                        locale: ptBR,
+                      })}
+                  </td>
                   <td>
                     <Button
+                      hidden={loan.status === 'delivered'}
                       onClick={() => {
-                        console.log('handleDeliverBook');
+                        handleDeliverBook(loan.id);
                       }}
                     >
                       Entreguei
                     </Button>
                     <Button
+                      hidden={loan.status === 'returned'}
                       onClick={() => {
-                        console.log('handleReceiveBook');
+                        handleReceiveBook(loan.id);
                       }}
                     >
                       Recebi
@@ -134,11 +214,13 @@ const Loans: React.FC = () => {
             <th>Titulo</th>
             <th>Dono</th>
             <th>Recebi</th>
-            <th>Devolvi</th>
           </tr>
           {searchRequestedLoansDone &&
             userRequestedLoans
-              .filter(loan => loan.status === 'accepted')
+              .filter(
+                loan =>
+                  loan.status === 'accepted' || loan.status === 'delivered',
+              )
               .map(loan => (
                 <tr key={loan.id}>
                   <td>
@@ -147,9 +229,13 @@ const Loans: React.FC = () => {
                   <td>
                     <strong>{loan.book.title}</strong>
                   </td>
-                  <td>{loan.requester.name}</td>
-                  <td>{loan.received_at}</td>
-                  <td>{loan.returned_at}</td>
+                  <td>{loan.book_owner.name}</td>
+                  <td>
+                    {loan.received_at &&
+                      formatRelative(parseISO(loan.received_at), new Date(), {
+                        locale: ptBR,
+                      })}
+                  </td>
                 </tr>
               ))}
         </LoansTable>
