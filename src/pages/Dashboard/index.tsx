@@ -183,9 +183,9 @@ const Dashboard: React.FC = () => {
             </Link>
           </LoanOption>
           <LoanOption>
-            <Link to="/livrosEmprestados">
+            <Link to="/emprestimos">
               <FiShare2 size={64} />
-              Livros emprestados
+              Empréstimos
             </Link>
           </LoanOption>
         </LoansContainer>
