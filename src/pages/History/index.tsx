@@ -104,8 +104,18 @@ const History: React.FC = () => {
                 <td>{loan.book.title}</td>
                 <td>{loan.book_owner.name}</td>
                 <td>{formatLoanStatus(loan.status)}</td>
-                <td>{loan.received_at}</td>
-                <td>{loan.returned_at}</td>
+                <td>
+                  {loan.received_at &&
+                    formatRelative(parseISO(loan.received_at), new Date(), {
+                      locale: ptBR,
+                    })}
+                </td>
+                <td>
+                  {loan.returned_at &&
+                    formatRelative(parseISO(loan.received_at), new Date(), {
+                      locale: ptBR,
+                    })}
+                </td>
               </tr>
             ))}
         </LoansTable>
