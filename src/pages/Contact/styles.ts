@@ -98,3 +98,11 @@ export const BookInformation = styled.div`
     font-size: 24px;
   }
 `;
+
+export const BackButton = styled.button`
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+`;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useRouteMatch, Link } from 'react-router-dom';
+import { useRouteMatch, Link, useHistory } from 'react-router-dom';
 
 import { FaWhatsapp, FaEnvelope } from 'react-icons/fa';
 import { FiArrowLeft } from 'react-icons/fi';
@@ -12,6 +12,7 @@ import {
   ContactInfo,
   BookContainer,
   BookInformation,
+  BackButton,
 } from './styles';
 
 import Header from '../../components/Header';
@@ -53,6 +54,8 @@ interface Loan {
 
 const Contact: React.FC = () => {
   const { params } = useRouteMatch<ContactParams>();
+
+  const history = useHistory();
 
   const { user } = useAuth();
 
@@ -103,9 +106,13 @@ const Contact: React.FC = () => {
             <BookInformation>
               <div>
                 <h1>{`Livro "${loan.book.title}"`}</h1>
-                <Link to={`/solicitacoesDeEmprestimos/${user.id}`}>
+                <BackButton
+                  onClick={() => {
+                    history.goBack();
+                  }}
+                >
                   <FiArrowLeft size={20} /> Voltar
-                </Link>
+                </BackButton>
               </div>
               <p>{`de ${loan.book.author}`}</p>
             </BookInformation>
