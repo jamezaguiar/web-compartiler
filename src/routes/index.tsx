@@ -19,6 +19,8 @@ import Contact from '../pages/Contact';
 import NewLoan from '../pages/NewLoan';
 import Loans from '../pages/Loans';
 
+import History from '../pages/History';
+
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={SignIn} />
@@ -44,6 +46,8 @@ const Routes: React.FC = () => (
     <Route path="/contato/:loan_id" component={Contact} isPrivate />
     <Route path="/novoEmprestimo" component={NewLoan} isPrivate />
     <Route path="/emprestimos" component={Loans} isPrivate />
+
+    <Route path="/historico" component={History} isPrivate />
   </Switch>
 );
 
