@@ -58,8 +58,6 @@ interface NewWishFormData {
 const NewWish: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const history = useHistory();
-
   const { addToast } = useToast();
 
   const [fetchedBooks, setFetchedBooks] = useState<APIResponseDTO>(

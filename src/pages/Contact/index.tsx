@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useRouteMatch, Link, useHistory } from 'react-router-dom';
+import { useRouteMatch, useHistory } from 'react-router-dom';
 
 import { FaWhatsapp, FaEnvelope } from 'react-icons/fa';
 import { FiArrowLeft } from 'react-icons/fi';
 
 import api from '../../services/api';
-import { useAuth } from '../../hooks/auth';
 
 import {
   PageTitle,
@@ -56,8 +55,6 @@ const Contact: React.FC = () => {
   const { params } = useRouteMatch<ContactParams>();
 
   const history = useHistory();
-
-  const { user } = useAuth();
 
   const [loan, setLoan] = useState<Loan>({} as Loan);
   const [searchDone, setSearchDone] = useState(false);

@@ -74,6 +74,7 @@ const Dashboard: React.FC = () => {
     socket.on('check_possible_loans', (data: Book[]) => {
       setPossibleLoans(data);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

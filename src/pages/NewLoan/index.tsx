@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
-import { FiBookOpen } from 'react-icons/fi';
-
 import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
 

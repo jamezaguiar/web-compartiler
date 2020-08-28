@@ -86,9 +86,3 @@ export const Background = styled.div`
   background: url(${signInBackgroundImage}) no-repeat center;
   background-size: cover;
 `;
-
-const OtherColors = styled.div`
-  /* background-color: #8093f1;
-  background-color: #ea7317;
-  background-color: #ff3c38; */
-`;
