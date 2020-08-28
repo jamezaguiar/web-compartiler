@@ -51,6 +51,10 @@ export const LoansTable = styled.table`
         padding: 16px;
 
         margin: 0;
+
+        & + button {
+          margin-left: 8px;
+        }
       }
     }
   }

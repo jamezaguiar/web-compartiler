@@ -67,10 +67,10 @@ const Loans: React.FC = () => {
       });
   }, [user.id]);
 
-  const handleReceiveBook = useCallback(() => {
+  const handleDeliverBook = useCallback(() => {
     // TODO
   }, []);
-  const handleReturnBook = useCallback(() => {
+  const handleReceiveBook = useCallback(() => {
     // TODO
   }, []);
 
@@ -107,10 +107,17 @@ const Loans: React.FC = () => {
                   <td>
                     <Button
                       onClick={() => {
+                        console.log('handleDeliverBook');
+                      }}
+                    >
+                      Entreguei
+                    </Button>
+                    <Button
+                      onClick={() => {
                         console.log('handleReceiveBook');
                       }}
                     >
-                      Recebido
+                      Recebi
                     </Button>
                   </td>
                 </tr>
@@ -128,7 +135,6 @@ const Loans: React.FC = () => {
             <th>Dono</th>
             <th>Recebi</th>
             <th>Devolvi</th>
-            <th>Ação</th>
           </tr>
           {searchRequestedLoansDone &&
             userRequestedLoans
@@ -144,15 +150,6 @@ const Loans: React.FC = () => {
                   <td>{loan.requester.name}</td>
                   <td>{loan.received_at}</td>
                   <td>{loan.returned_at}</td>
-                  <td>
-                    <Button
-                      onClick={() => {
-                        console.log('handleReturnBook');
-                      }}
-                    >
-                      Devolver
-                    </Button>
-                  </td>
                 </tr>
               ))}
         </LoansTable>
